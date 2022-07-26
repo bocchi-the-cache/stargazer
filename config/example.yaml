@@ -1,0 +1,132 @@
+# `server` is global config for stargazer
+# There maybe distributed `client/agent` in the future, so we use `server` here.
+server:
+  panel_port:
+    8088
+  prom_port:
+    8099
+  prom_node_label:
+    "stargazer-test-node-1"
+
+# `targets` are the targets that stargazer will monitor.
+targets:
+    -
+        # http target, not healthy when
+        #     - status code is not 200, or http failed
+        #     - response time is greater than threshold
+        # `name`: a unique name for the target
+        name: "test-http-target1"
+        enabled: true
+        # `type`: http, https, tcp, ping
+        type: "http"
+        # `url`: don't need schema, it will be added automatically
+        url: "localhost:8080/test"
+        # `interval`: the interval of the target
+        interval: "10s"
+        # `timeout`: the timeout of the target
+        timeout: "5s"
+        threshold:
+            warning:
+                -
+                    key: "response_time"
+                    value: "0.5s"
+                    operator: ">"
+            critical:
+                -
+                    key: "response_time"
+                    value: "0.8s"
+                    operator: ">"
+
+    -
+        # https target, not healthy when
+        #     - status code is not 200
+        #     - response time is greater than threshold
+        #     - SSL certificate is not valid or nearing expiration
+        name: "test-https-target2"
+        enabled: true
+        type: "https"
+        url: "localhost:8080/test"
+        interval: "10s"
+        timeout: "5s"
+        threshold:
+            warning:
+                -
+                    key: "response_time"
+                    value: "0.5s"
+                    operator: ">"
+                -
+                    key: "ssl_cert_expiration"
+                    value: "7d"
+                    operator: "<"
+            critical:
+                -
+                    key: "response_time"
+                    value: "0.8s"
+                    operator: ">"
+                -
+                    key: "ssl_cert_expiration"
+                    value: "1d"
+                    operator: "<"
+
+    -
+        # tcp target, not healthy when
+        #     - tcp failed
+        #     - response time is greater than threshold
+        name: "test-tcp-target3"
+        enabled: true
+        type: "tcp"
+        url: "localhost:8080"
+        interval: "10s"
+        timeout: "5s"
+        threshold:
+            warning:
+                -
+                    key: "response_time"
+                    value: "0.5s"
+                    operator: ">"
+            critical:
+                -
+                    key: "response_time"
+                    value: "0.8s"
+                    operator: ">"
+
+    -
+        # ping target, not healthy when
+        #     - ping failed
+        #     - round_trip_time(RTT) is greater than threshold
+        name: "test-ping-target4"
+        enabled: true
+        type: "ping"
+        url: "localhost"
+        interval: "10s"
+        timeout: "5s"
+        threshold:
+            warning:
+                -
+                    key: "round_trip_time"
+                    value: "0.5s"
+                    operator: ">"
+            critical:
+                -
+                    key: "round_trip_time"
+                    value: "0.8s"
+                    operator: ">"
+
+    -
+        name: "test-ping-target5"
+        enabled: false
+        type: "ping"
+        url: "localhost"
+        interval: "10s"
+        timeout: "5s"
+        threshold:
+            warning:
+                -
+                    key: "round_trip_time"
+                    value: "0.5s"
+                    operator: ">"
+            critical:
+                -
+                    key: "round_trip_time"
+                    value: "0.8s"
+                    operator: ">"
