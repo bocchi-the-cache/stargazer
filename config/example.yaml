@@ -8,7 +8,7 @@ server:
   prom_node_label:
     "stargazer-test-node-1"
 
-# `targets` are the targets that stargazer will monitor.
+# `targets` are the targets that stargazer will detect.
 targets:
     -
         # http target, not healthy when
