@@ -19,4 +19,5 @@ type DetectorMessage struct {
 	Type       string
 	Target     string
 	UpdateTime time.Time
+	Report     HealthReport
 }
