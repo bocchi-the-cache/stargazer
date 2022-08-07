@@ -14,6 +14,7 @@ type BaseDetector struct {
 	CreateTime time.Time
 	UpdateTime time.Time
 	Interval   time.Duration
+	Signal     chan struct{}
 }
 
 type Detector interface {
