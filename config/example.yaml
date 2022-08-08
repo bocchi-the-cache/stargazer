@@ -34,12 +34,10 @@ targets:
                 level: "warning"
                 key: "response_time"
                 value: "0.5s"
-                operator: ">"
             -
                 level: "critical"
                 key: "response_time"
                 value: "0.8s"
-                operator: ">"
 
     -
         # https target, not healthy when
@@ -57,22 +55,18 @@ targets:
                 level: "warning"
                 key: "response_time"
                 value: "0.5s"
-                operator: ">"
             -
                 level: "warning"
                 key: "ssl_cert_expiration"
                 value: "7d"
-                operator: "<"
             -
                 level: "critical"
                 key: "response_time"
                 value: "0.8s"
-                operator: ">"
             -
                 level: "critical"
                 key: "ssl_cert_expiration"
                 value: "1d"
-                operator: "<"
 
     -
         # tcp target, not healthy when
@@ -89,12 +83,10 @@ targets:
                 level: "warning"
                 key: "response_time"
                 value: "0.5s"
-                operator: ">"
             -
                 level: "critical"
                 key: "response_time"
                 value: "0.8s"
-                operator: ">"
 
     -
         # ping target, not healthy when
@@ -111,12 +103,10 @@ targets:
                 level: "warning"
                 key: "round_trip_time"
                 value: "0.5s"
-                operator: ">"
             -
                 level: "critical"
                 key: "round_trip_time"
                 value: "0.8s"
-                operator: ">"
 
     -
         name: "test-ping-target5"
@@ -130,9 +120,7 @@ targets:
                 level: "warning"
                 key: "round_trip_time"
                 value: "0.5s"
-                operator: ">"
             -
                 level: "critical"
                 key: "round_trip_time"
                 value: "0.8s"
-                operator: ">"
