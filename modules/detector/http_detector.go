@@ -89,14 +89,14 @@ func (h *HttpDetector) DetectOnce() {
 	// Do Key Detection
 	err := h.DetectHTTP(&msg)
 	if err != nil {
-		logger.Errorf("detect http failed. detector: %v, err: %s", h, err)
+		logger.Debugf("detect http failed. detector: %v, err: %s", h, err)
 	}
 	err = h.Validate(&msg)
 	if err != nil {
-		logger.Errorf("validate http failed. detector: %v, err: %s", h, err)
+		logger.Debugf("validate http failed. detector: %v, err: %s", h, err)
 
 	}
-	logger.Infof("detect http success. detector: %v, duration: %s", h, msg.Report.Metric[METRIC_RESPONSE_TIME])
+	logger.Debugf("detect http success. detector: %v, duration: %s", h, msg.Report.Metric[METRIC_RESPONSE_TIME])
 }
 
 // DetectHTTP do key detection, return a message with health report
@@ -128,7 +128,7 @@ func (h *HttpDetector) DetectHTTP(msg *model.DetectorMessage) error {
 		msg.Report.Errs = append(msg.Report.Errs, err)
 		return err
 	}
-	logger.Debugf("detect http success. detector: %v, body length: %s", h, len(respBody))
+	logger.Debugf("fetch http body success. detector: %v, body length: %s", h, len(respBody))
 
 	// Check status code
 	if resp.StatusCode != http.StatusOK {
