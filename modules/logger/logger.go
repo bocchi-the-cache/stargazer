@@ -37,10 +37,19 @@ func Init() {
 
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	core := zapcore.NewCore(
-		zapcore.NewJSONEncoder(encoderConfig),
-		w,
-		logLevel,
+
+	consoleEncoder := zapcore.NewConsoleEncoder(encoderConfig)
+
+	core := zapcore.NewTee(
+		zapcore.NewCore(
+			zapcore.NewJSONEncoder(encoderConfig),
+			w,
+			logLevel,
+		),
+		zapcore.NewCore(
+			consoleEncoder,
+			zapcore.Lock(os.Stdout),
+			logLevel),
 	)
 
 	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
@@ -93,6 +102,14 @@ func getFilePath() string {
 
 func getAppname() string {
 	return "stargazer"
+}
+
+func Debug(args ...interface{}) {
+	log.Debug(args...)
+}
+
+func Debugf(template string, args ...interface{}) {
+	log.Debugf(template, args...)
 }
 
 func Info(args ...interface{}) {
