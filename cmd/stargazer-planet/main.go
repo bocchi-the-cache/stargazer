@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/sptuan/stargazer/modules/config"
 	"github.com/sptuan/stargazer/modules/logger"
+	"github.com/sptuan/stargazer/modules/service"
 )
 
 var (
@@ -25,12 +26,19 @@ func initLogger() {
 	logger.Init()
 }
 
+func initService() {
+	service.Init()
+}
+
 func main() {
 	flag.Parse()
 
-	// TODO: Create default config file when not existed
 	initConfig(configFile)
 	initLogger()
+	initService()
 
-	logger.Info("Test project init")
+	logger.Info("Project init complete. Start to run web service...")
+	if err := service.Run(); err != nil {
+		panic(err)
+	}
 }
