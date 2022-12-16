@@ -5,12 +5,10 @@ import "github.com/gin-gonic/gin"
 var defaultRouter *gin.Engine
 
 func Init() {
-	defaultRouter = gin.Default()
-	defaultRouter.GET("/ping", func(context *gin.Context) {
-		context.String(200, "pong")
-	})
+	defaultRouter = NewRouter()
 }
 
 func Run() error {
+	// TODO: add config port here
 	return defaultRouter.Run(":8080")
 }
