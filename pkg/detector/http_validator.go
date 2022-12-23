@@ -3,7 +3,7 @@ package detector
 import (
 	"errors"
 	"fmt"
-	"github.com/sptuan/stargazer/modules/model"
+	"github.com/sptuan/stargazer/internal/model"
 	"time"
 )
 

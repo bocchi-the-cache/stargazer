@@ -2,7 +2,7 @@ package detector
 
 import (
 	"github.com/google/uuid"
-	"github.com/sptuan/stargazer/modules/model"
+	"github.com/sptuan/stargazer/internal/model"
 	"time"
 )
 

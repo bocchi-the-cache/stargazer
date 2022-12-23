@@ -6,7 +6,7 @@ package logger
 
 import (
 	"fmt"
-	"github.com/sptuan/stargazer/modules/global"
+	"github.com/sptuan/stargazer/internal/global"
 	"os"
 	"path/filepath"
 	"strings"

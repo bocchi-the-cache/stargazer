@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/sptuan/stargazer/modules/logger"
+	"github.com/sptuan/stargazer/pkg/logger"
 	"testing"
 )
 

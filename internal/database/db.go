@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/sptuan/stargazer/modules/logger"
-	"github.com/sptuan/stargazer/modules/model"
+	"github.com/sptuan/stargazer/internal/model"
+	"github.com/sptuan/stargazer/pkg/logger"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"io/fs"
