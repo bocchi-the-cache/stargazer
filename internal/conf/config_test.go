@@ -1,4 +1,4 @@
-package config
+package conf
 
 import "testing"
 
@@ -7,5 +7,6 @@ func TestConfigInit(t *testing.T) {
 }
 
 func TestConfigInitWithPath(t *testing.T) {
-	Init("../../config")
+	Init("../../config/config.yaml")
+	t.Logf("Config: %+v", cfg)
 }

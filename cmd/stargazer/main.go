@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/sptuan/stargazer/modules/config"
-	"github.com/sptuan/stargazer/modules/logger"
-	"github.com/sptuan/stargazer/modules/service"
+	"github.com/sptuan/stargazer/internal/conf"
+	"github.com/sptuan/stargazer/internal/service"
+	"github.com/sptuan/stargazer/pkg/logger"
 )
 
 var (
@@ -16,14 +16,12 @@ func init() {
 }
 
 func initConfig(configFilePath string) {
-	if configFilePath == "" {
-		configFilePath = "config.yaml"
-	}
-	config.Init(configFilePath)
+	conf.Init(configFilePath)
 }
 
 func initLogger() {
-	logger.Init()
+	// use default logger is enough
+	//logger.Init()
 }
 
 func initService() {
@@ -33,8 +31,8 @@ func initService() {
 func main() {
 	flag.Parse()
 
-	initConfig(configFile)
 	initLogger()
+	initConfig(configFile)
 	initService()
 
 	logger.Info("Project init complete. Start to run web service...")

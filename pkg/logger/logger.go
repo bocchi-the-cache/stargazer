@@ -6,7 +6,6 @@ package logger
 
 import (
 	"fmt"
-	"github.com/sptuan/stargazer/internal/global"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,8 +19,8 @@ var log *zap.SugaredLogger
 
 var logLevel = zap.NewAtomicLevel()
 
-func Init() {
-	SetLevel(configLevel[global.ServerConfig.LogLevel])
+func init() {
+	SetLevel(configLevel["info"])
 	filePath := getFilePath()
 
 	fmt.Println("[INFO] logger init filePath: ", filePath)
@@ -142,4 +141,8 @@ func Panic(args ...interface{}) {
 
 func Panicf(template string, args ...interface{}) {
 	log.Panicf(template, args...)
+}
+
+func With(args ...interface{}) *zap.SugaredLogger {
+	return log.With(args...)
 }
