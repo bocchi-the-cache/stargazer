@@ -7,8 +7,9 @@ type AllConfig struct {
 }
 
 type ServiceConfig struct {
-	Label string     `yaml:"label"`
-	Http  HttpConfig `yaml:"http"`
+	Label    string     `yaml:"label"`
+	Http     HttpConfig `yaml:"http"`
+	LogLevel string     `yaml:"log_level"`
 }
 
 type HttpConfig struct {

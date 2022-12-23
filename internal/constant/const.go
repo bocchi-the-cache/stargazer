@@ -5,9 +5,10 @@ type Level string
 type ProbeType string
 
 const (
-	INFO  Level = "info"
-	WARN  Level = "warn"
-	ERROR Level = "error"
+	DebugLevel Level = "debug"
+	INFO       Level = "info"
+	WARN       Level = "warn"
+	ERROR      Level = "error"
 )
 
 const (
