@@ -26,9 +26,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Task"
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
         400:
           description: "Invalid status value"
     post:
@@ -74,7 +77,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Task"
+                type: object
+                properties:
+                  task:
+                    $ref: "#/components/schemas/Task"
         400:
           description: "Invalid ID supplied"
         404:
@@ -189,9 +195,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DataSeries"
+                type: object
+                properties:
+                  series:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DataSeries"
         400:
           description: "Invalid ID supplied"
         404:
@@ -218,7 +227,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DataStatus"
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/DataStatus"
         400:
           description: "Invalid ID supplied"
         404:
@@ -259,9 +271,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/DataLog"
+                type: object
+                properties:
+                  log:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/DataLog"
         400:
           description: "Invalid ID supplied"
         404:

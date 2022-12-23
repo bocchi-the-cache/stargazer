@@ -1,4 +1,4 @@
-package database
+package db
 
 import (
 	"github.com/sptuan/stargazer/internal/model"
@@ -11,9 +11,8 @@ import (
 )
 
 // NOTE: For easy use and small projects, we use gorm.DB (sqlite3).
-// Actually, we should use time-series database like prometheus or influxdb.
-// In our roadmap, we provide metrics exporter for prometheus to fetch.
-var db *gorm.DB
+// Should use time-series database like prometheus in the future.
+var Db *gorm.DB
 
 func Init(dbPath string) error {
 	dir := path.Dir(dbPath)
@@ -22,7 +21,7 @@ func Init(dbPath string) error {
 		return err
 	}
 	// TODO: Debug/Production log mode
-	db, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
+	Db, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
 		logger.Panicf("failed to open database: %v", err)
 		return err
@@ -36,5 +35,5 @@ func Init(dbPath string) error {
 }
 
 func initDetectionRecord() error {
-	return db.AutoMigrate(&model.UserDetectionRecord{})
+	return Db.AutoMigrate(&model.UserDetectionRecord{})
 }

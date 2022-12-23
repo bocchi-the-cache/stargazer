@@ -1,6 +1,10 @@
 package service
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/sptuan/stargazer/internal/conf"
+)
 
 var defaultRouter *gin.Engine
 
@@ -9,6 +13,5 @@ func Init() {
 }
 
 func Run() error {
-	// TODO: add config port here
-	return defaultRouter.Run(":8080")
+	return defaultRouter.Run(fmt.Sprintf("%s:%d", conf.Cfg.Service.Http.Addr, conf.Cfg.Service.Http.Port))
 }

@@ -1,4 +1,4 @@
-package migration
+package db
 
 import (
 	"github.com/sptuan/stargazer/internal/entity"

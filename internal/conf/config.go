@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var cfg AllConfig
+var Cfg AllConfig
 
 // Init Read config from file and parse. If file not exist, create it.
 func Init(configFile string) {
@@ -30,7 +30,7 @@ func Init(configFile string) {
 		logger.Panic("Read config file failed: ", err)
 	}
 
-	err = yaml.Unmarshal(f, &cfg)
+	err = yaml.Unmarshal(f, &Cfg)
 	if err != nil {
 		logger.Panic("Parse config file failed: ", err)
 	}

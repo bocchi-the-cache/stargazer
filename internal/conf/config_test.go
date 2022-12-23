@@ -8,5 +8,5 @@ func TestConfigInit(t *testing.T) {
 
 func TestConfigInitWithPath(t *testing.T) {
 	Init("../../config/config.yaml")
-	t.Logf("Config: %+v", cfg)
+	t.Logf("Config: %+v", Cfg)
 }
