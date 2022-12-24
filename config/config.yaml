@@ -1,126 +1,20 @@
-# `server` is global config for stargazer
-# There maybe distributed `client/agent` in the future, so we use `server` here.
-server:
-  # unique tag for this server. Also used in prometheus
+# default config of version 0.0.1
+service:
   label:
     "stargazer-test-node-1"
-  panel_port:
-    8088
-  prometheus_port:
-    8099
+  http:
+    addr: "0.0.0.0"
+    port: 8080
   log_level: # debug, info, error
     "info"
 
+data:
+  database:
+#    only support sqlite3 now
+    driver: "sqlite3"
+    connection: "/data/sqlite3/stargazer.db"
 
-# `targets` are the targets that stargazer will detect.
-targets:
-  -
-    # http target, not healthy when
-    #     - status code is not 200, or http failed
-    #     - response time is greater than thresholds
-    # `name`: a unique name for the target
-    name: "test-http-target1"
-    enabled: true
-    # `type`: http, https, tcp, ping
-    type: "http"
-    # `destination`: don't need scheme, it will be added automatically
-    destination: "localhost:8080/test"
-    # `interval`: the interval of the target
-    interval: "10s"
-    # `timeout`: the timeout of the target
-    timeout: "5s"
-    thresholds:
-      -
-        level: "warning"
-        key: "response_time"
-        value: "0.5s"
-      -
-        level: "critical"
-        key: "response_time"
-        value: "0.8s"
-
-  -
-    # https target, not healthy when
-    #     - status code is not 200
-    #     - response time is greater than thresholds
-    #     - SSL certificate is not valid or nearing expiration
-    name: "test-https-target2"
-    enabled: true
-    type: "https"
-    destination: "localhost:8080/test"
-    interval: "10s"
-    timeout: "5s"
-    thresholds:
-      -
-        level: "warning"
-        key: "response_time"
-        value: "0.5s"
-      -
-        level: "warning"
-        key: "ssl_cert_expiration"
-        value: "7d"
-      -
-        level: "critical"
-        key: "response_time"
-        value: "0.8s"
-      -
-        level: "critical"
-        key: "ssl_cert_expiration"
-        value: "1d"
-
-  -
-    # tcp target, not healthy when
-    #     - tcp failed
-    #     - response time is greater than thresholds
-    name: "test-tcp-target3"
-    enabled: true
-    type: "tcp"
-    destination: "localhost:8080"
-    interval: "10s"
-    timeout: "5s"
-    thresholds:
-      -
-        level: "warning"
-        key: "response_time"
-        value: "0.5s"
-      -
-        level: "critical"
-        key: "response_time"
-        value: "0.8s"
-
-  -
-    # ping target, not healthy when
-    #     - ping failed
-    #     - round_trip_time(RTT) is greater than thresholds
-    name: "test-ping-target4"
-    enabled: true
-    type: "ping"
-    destination: "localhost"
-    interval: "10s"
-    timeout: "5s"
-    thresholds:
-      -
-        level: "warning"
-        key: "round_trip_time"
-        value: "0.5s"
-      -
-        level: "critical"
-        key: "round_trip_time"
-        value: "0.8s"
-
-  -
-    name: "test-ping-target5"
-    enabled: false
-    type: "ping"
-    destination: "localhost"
-    interval: "10s"
-    timeout: "5s"
-    thresholds:
-      -
-        level: "warning"
-        key: "round_trip_time"
-        value: "0.5s"
-      -
-        level: "critical"
-        key: "round_trip_time"
-        value: "0.8s"
+swagger:
+  enabled: false
+  addr: "127.0.0.1"
+  port: 8081
