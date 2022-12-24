@@ -17,5 +17,9 @@ type DataSeries struct {
 
 	Value float32 `json:"value,omitempty"`
 
+	SuccessCount int64 `json:"success_count,omitempty"`
+
+	FailCount int64 `json:"fail_count,omitempty"`
+
 	Message string `json:"message,omitempty"`
 }

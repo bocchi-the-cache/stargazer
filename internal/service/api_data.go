@@ -12,9 +12,9 @@ package service
 
 import (
 	"fmt"
-	"github.com/sptuan/stargazer/internal/constant"
 	"github.com/sptuan/stargazer/internal/dao"
 	"github.com/sptuan/stargazer/internal/entity"
+	"github.com/sptuan/stargazer/internal/model"
 	"github.com/sptuan/stargazer/pkg/logger"
 	"net/http"
 	"strconv"
@@ -72,7 +72,7 @@ func GetDataLogByTaskId(c *gin.Context) {
 			return
 		}
 	} else {
-		dataLog, err = dao.GetDataLogByTaskIdLevelInTimeRange(taskId, constant.Level(level), start, end)
+		dataLog, err = dao.GetDataLogByTaskIdLevelInTimeRange(taskId, model.Level(level), start, end)
 		if err != nil {
 			logger.Errorf("GetDataLogByTaskId: %v", err)
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -130,11 +130,11 @@ func GetDataSeriesByTaskId(c *gin.Context) {
 		dataSeriesItem.TimeStart = int64(st)
 		dataSeriesItem.TimeEnd = int64(st + interval)
 
-		HealtyCounter := 0
-		UnhealtyCounter := 0
+		HealtyCounter := int64(0)
+		UnhealtyCounter := int64(0)
 		msg := strings.Builder{}
-		for dataLog[index].Time < st+interval {
-			if constant.INFO == constant.Level(dataLog[index].Level) {
+		for dataLog[index].Time < int64(st+interval) {
+			if model.INFO == model.Level(dataLog[index].Level) {
 				HealtyCounter++
 			} else {
 				UnhealtyCounter++
@@ -144,6 +144,8 @@ func GetDataSeriesByTaskId(c *gin.Context) {
 			index++
 		}
 		dataSeriesItem.Value = float32(HealtyCounter) / float32(HealtyCounter+UnhealtyCounter)
+		dataSeriesItem.SuccessCount = HealtyCounter
+		dataSeriesItem.FailCount = UnhealtyCounter
 		dataSeries = append(dataSeries, dataSeriesItem)
 	}
 

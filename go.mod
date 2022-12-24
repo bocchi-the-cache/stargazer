@@ -4,8 +4,8 @@ go 1.17
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/go-ping/ping v1.1.0
 	github.com/go-playground/validator/v10 v10.11.1
-	github.com/google/uuid v1.3.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -39,6 +39,9 @@ require (
 )
 
 require (
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
+	github.com/tatsushid/go-fastping v0.0.0-20160109021039-d7bb493dee3e // indirect
+	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 )

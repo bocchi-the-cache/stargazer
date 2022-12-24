@@ -1,7 +1,7 @@
 package detector
 
 import (
-	"github.com/google/uuid"
+	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/internal/model"
 	"time"
 )
@@ -9,51 +9,23 @@ import (
 const DETECTOR_HTTP = "http_detector"
 
 type BaseDetector struct {
-	// uuid is unique, mostly for index
-	Uuid       uuid.UUID
+	Id         int
 	Name       string
-	Type       string
+	Type       model.ProbeType
 	Target     string
+	Timeout    time.Duration
+	Interval   time.Duration
 	CreateTime time.Time
 	UpdateTime time.Time
-	Interval   time.Duration
-	Signal     chan struct{}
-	Validators []func(*model.DetectorMessage) error
 }
 
 type Detector interface {
-	Start() error
-	Stop() error
+	Detect() (entity.DataLog, error)
 }
 
-func (d *BaseDetector) NewMessage() model.DetectorMessage {
-	return model.DetectorMessage{
-		Uuid:       d.Uuid,
-		Name:       d.Name,
-		Type:       d.Type,
-		Target:     d.Target,
-		UpdateTime: time.Now(),
-		Report: model.HealthReport{
-			HealthLevel: model.LevelHealthy,
-			Errs:        []error{},
-			Metric:      map[string]float64{},
-			Logs:        []string{},
-		},
+func newMessage() entity.DataLog {
+	return entity.DataLog{
+		Time:  time.Now().Unix(),
+		Level: string(model.INFO),
 	}
-}
-
-// RegisterValidator registers a validator function
-// NOTE: Validators only return error of itself.
-// For alert error, put it into message->report->errs.
-func (d *BaseDetector) RegisterValidator(fn func(msg *model.DetectorMessage) error) {
-	d.Validators = append(d.Validators, fn)
-}
-
-func (d *BaseDetector) Validate(msg *model.DetectorMessage) error {
-	for _, fn := range d.Validators {
-		if err := fn(msg); err != nil {
-			return err
-		}
-	}
-	return nil
 }

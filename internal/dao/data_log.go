@@ -1,9 +1,9 @@
 package dao
 
 import (
-	"github.com/sptuan/stargazer/internal/constant"
 	"github.com/sptuan/stargazer/internal/db"
 	"github.com/sptuan/stargazer/internal/entity"
+	"github.com/sptuan/stargazer/internal/model"
 )
 
 func AddDataLog(dataLog *entity.DataLog) error {
@@ -17,7 +17,7 @@ func GetDataLogByTaskIdInTimeRange(taskId int, startTime int, endTime int) ([]en
 	return dataLogs, err
 }
 
-func GetDataLogByTaskIdLevelInTimeRange(taskId int, level constant.Level, startTime int, endTime int) ([]entity.DataLog, error) {
+func GetDataLogByTaskIdLevelInTimeRange(taskId int, level model.Level, startTime int, endTime int) ([]entity.DataLog, error) {
 	var dataLogs []entity.DataLog
 	err := db.Db.Where("task_id = ? AND level = ? AND created_at BETWEEN ? AND ?", taskId, level, startTime, endTime).Find(&dataLogs).Error
 	return dataLogs, err

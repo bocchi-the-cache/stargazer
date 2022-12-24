@@ -1,14 +1,14 @@
-package constant
+package model
 
 type Level string
 
 type ProbeType string
 
 const (
-	DebugLevel Level = "debug"
-	INFO       Level = "info"
-	WARN       Level = "warn"
-	ERROR      Level = "error"
+	DEBUG Level = "debug"
+	INFO  Level = "info"
+	WARN  Level = "warn"
+	ERROR Level = "error"
 )
 
 const (

@@ -315,7 +315,7 @@ components:
         interval:
           type: integer
           format: int64
-          description: "Interval in seconds"
+          description: "Interval in milliseconds"
         timeout:
           type: integer
           format: int64
@@ -343,6 +343,12 @@ components:
         value:
           type: number
           format: float
+        success_count:
+          type: integer
+          format: int64
+        fail_count:
+          type: integer
+          format: int64
         message:
           type: string
     DataStatus:

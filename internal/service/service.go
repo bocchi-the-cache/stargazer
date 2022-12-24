@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sptuan/stargazer/internal/conf"
-	"github.com/sptuan/stargazer/internal/constant"
+	"github.com/sptuan/stargazer/internal/model"
 )
 
 var defaultRouter *gin.Engine
@@ -15,7 +15,7 @@ func Init() {
 
 func Run() error {
 	// set gin debug mode
-	if constant.Level(conf.Cfg.Service.LogLevel) == constant.DebugLevel {
+	if model.Level(conf.Cfg.Service.LogLevel) == model.DEBUG {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
