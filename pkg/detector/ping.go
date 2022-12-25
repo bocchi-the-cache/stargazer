@@ -12,7 +12,9 @@ import (
 	"time"
 )
 
-// PingDetector ping target with UDP ping
+// PingDetector ping target with ICMP ping
+//
+// Note: ICMP ping requires root privilege!
 type PingDetector struct {
 	BaseDetector
 }
@@ -35,7 +37,9 @@ func NewPingDetector(task *entity.Task) (*PingDetector, error) {
 	}, nil
 }
 
-// Detect WARNING: Ping ICMP requires root privilege!
+// Detect
+//
+// WARNING: Ping ICMP requires root privilege!
 func (d *PingDetector) Detect() (entity.DataLog, error) {
 	d.UpdateTime = time.Now()
 	msg := newMessage()
@@ -118,7 +122,7 @@ loop:
 	return msg, nil
 }
 
-// TODO: github.com/go-ping/ping has issue on my mac, so I can't test it
+// NOTE: github.com/go-ping/ping has issue on my mac, so I can't test it
 //func (d *PingDetector) Detect() (entity.DataLog, error) {
 //	// ping target
 //	msg := newMessage()
