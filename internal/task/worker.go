@@ -27,6 +27,7 @@ func (w *Worker) Start() {
 				if err != nil {
 					logger.Errorf("detect failed, err: %v, msg: %v", err, msg)
 				}
+				msg.TaskId = int(w.t.ID)
 				err = dao.AddDataLog(&msg)
 				if err != nil {
 					logger.Errorf("add data log failed, err: %v", err)

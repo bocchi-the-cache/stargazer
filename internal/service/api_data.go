@@ -91,23 +91,40 @@ func parseDataLogQuery(c *gin.Context) (int, int, int, int, error) {
 	}
 
 	// parse interval
-	interval, err := strconv.Atoi(c.Query("interval"))
-	if err != nil {
-		return 0, 0, 0, 0, err
+	intervalStr := c.Query("interval")
+	interval := 0
+	if intervalStr == "" {
+		interval = 3600000
+	} else {
+		interval, err = strconv.Atoi(intervalStr)
+		if err != nil {
+			return 0, 0, 0, 0, err
+		}
 	}
 
 	// parse start
-	start, err := strconv.Atoi(c.Query("start"))
-	if err != nil {
-		return 0, 0, 0, 0, err
+	startStr := c.Query("start")
+	start := 0
+	if startStr == "" {
+		start = int(time.Now().Add(-24 * time.Hour).Unix())
+	} else {
+		start, err = strconv.Atoi(startStr)
+		if err != nil {
+			return 0, 0, 0, 0, err
+		}
 	}
 
+	endStr := c.Query("end")
+	end := 0
+	if endStr == "" {
+		end = int(time.Now().Unix())
+	} else {
+		end, err = strconv.Atoi(endStr)
+		if err != nil {
+			return 0, 0, 0, 0, err
+		}
+	}
 	// parse end
-	end, err := strconv.Atoi(c.Query("end"))
-	if err != nil {
-		return 0, 0, 0, 0, err
-	}
-
 	return taskId, interval, start, end, nil
 }
 
@@ -123,9 +140,12 @@ func GetDataSeriesByTaskId(c *gin.Context) {
 	// get data log
 	dataLog, err := dao.GetDataLogByTaskIdInTimeRange(taskId, start, end)
 	var dataSeries []DataSeries
+	if len(dataLog) == 0 {
+		c.JSON(http.StatusOK, gin.H{"series": dataSeries})
+		return
+	}
 
-	index := 0
-	for st := start; st < end+interval; st += interval {
+	for st := start; st < end; st += interval {
 		var dataSeriesItem DataSeries
 		dataSeriesItem.TimeStart = int64(st)
 		dataSeriesItem.TimeEnd = int64(st + interval)
@@ -133,17 +153,24 @@ func GetDataSeriesByTaskId(c *gin.Context) {
 		HealtyCounter := int64(0)
 		UnhealtyCounter := int64(0)
 		msg := strings.Builder{}
-		for dataLog[index].Time < int64(st+interval) {
+		for index := range dataLog {
+			logTime := int(dataLog[index].CreatedAt)
+			if logTime <= st || logTime > st+interval {
+				continue
+			}
 			if model.INFO == model.Level(dataLog[index].Level) {
 				HealtyCounter++
 			} else {
 				UnhealtyCounter++
-				timeHuman := time.Unix(int64(dataLog[index].Time), 0).Format("2006-01-02 15:04:05")
-				msg.WriteString(fmt.Sprintf("%s:%s, %s)", timeHuman, dataLog[index].Level, dataLog[index].Message))
+				timeHuman := time.Unix(int64(dataLog[index].CreatedAt), 0).Format("2006-01-02 15:04:05")
+				msg.WriteString(fmt.Sprintf("%s:%s, %s\n", timeHuman, dataLog[index].Level, dataLog[index].Message))
 			}
-			index++
 		}
-		dataSeriesItem.Value = float32(HealtyCounter) / float32(HealtyCounter+UnhealtyCounter)
+		if (HealtyCounter + UnhealtyCounter) == 0 {
+			dataSeriesItem.Value = -1
+		} else {
+			dataSeriesItem.Value = float32(HealtyCounter) / float32(HealtyCounter+UnhealtyCounter)
+		}
 		dataSeriesItem.SuccessCount = HealtyCounter
 		dataSeriesItem.FailCount = UnhealtyCounter
 		dataSeries = append(dataSeries, dataSeriesItem)

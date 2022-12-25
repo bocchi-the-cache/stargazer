@@ -4,9 +4,11 @@ import (
 	"github.com/sptuan/stargazer/internal/db"
 	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/internal/model"
+	"time"
 )
 
 func AddDataLog(dataLog *entity.DataLog) error {
+	dataLog.CreatedAt = time.Now().Unix()
 	err := db.Db.Create(dataLog).Error
 	return err
 }

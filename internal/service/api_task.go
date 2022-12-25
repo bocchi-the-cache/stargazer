@@ -62,7 +62,7 @@ func AddTask(c *gin.Context) {
 
 // DeleteTaskById - Delete task by ID
 func DeleteTaskById(c *gin.Context) {
-	idStr := c.Param("id")
+	idStr := c.Param("taskId")
 	id, err := strconv.Atoi(strings.TrimSpace(idStr))
 	if err != nil {
 		logger.Errorf("DeleteTaskById: %v", err)
@@ -80,7 +80,7 @@ func DeleteTaskById(c *gin.Context) {
 
 // GetTaskById - Get task by ID
 func GetTaskById(c *gin.Context) {
-	idStr := c.Param("id")
+	idStr := c.Param("taskId")
 	id, err := strconv.Atoi(strings.TrimSpace(idStr))
 	if err != nil {
 		logger.Errorf("GetTaskById: %v", err)
@@ -110,7 +110,7 @@ func GetTasks(c *gin.Context) {
 
 // UpdateTaskById - Update task by ID
 func UpdateTaskById(c *gin.Context) {
-	idStr := c.Param("id")
+	idStr := c.Param("taskId")
 	id, err := strconv.Atoi(strings.TrimSpace(idStr))
 	if err != nil {
 		logger.Errorf("UpdateTaskById: %v", err)
