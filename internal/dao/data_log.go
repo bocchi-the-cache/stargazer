@@ -28,3 +28,8 @@ func GetDataLogLastByTaskId(taskId int) (*entity.DataLog, error) {
 	err := db.Db.Where("task_id = ?", taskId).Last(&dataLog).Error
 	return &dataLog, err
 }
+
+func DeleteDataLogBeforeTime(time int) error {
+	err := db.Db.Where("created_at < ?", time).Delete(&entity.DataLog{}).Error
+	return err
+}

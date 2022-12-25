@@ -4,6 +4,8 @@ type Level string
 
 type ProbeType string
 
+type Status string
+
 const (
 	DEBUG Level = "debug"
 	INFO  Level = "info"
@@ -16,4 +18,9 @@ const (
 	HTTP  ProbeType = "http"
 	HTTPS ProbeType = "https"
 	PORT  ProbeType = "port"
+)
+
+const (
+	ACTIVE   Status = "active"
+	DISABLED Status = "disabled"
 )
