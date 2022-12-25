@@ -16,8 +16,8 @@ func GetTaskById(id int) (*entity.Task, error) {
 	return &task, err
 }
 
-func GetTasks() ([]entity.Task, error) {
-	var tasks []entity.Task
+func GetTasks() ([]*entity.Task, error) {
+	var tasks []*entity.Task
 	err := db.Db.Find(&tasks).Error
 	return tasks, err
 }

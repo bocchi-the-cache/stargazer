@@ -12,7 +12,7 @@ data:
   database:
 #    only support sqlite3 now
     driver: "sqlite3"
-    connection: "/data/sqlite3/stargazer.db"
+    connection: "stargazer.sqlite3"
 
 swagger:
   enabled: false
