@@ -1,11 +1,11 @@
 package db
 
 import (
+	"github.com/glebarez/sqlite"
 	"github.com/sptuan/stargazer/internal/conf"
 	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/internal/model"
 	"github.com/sptuan/stargazer/pkg/logger"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"io/fs"
 	"os"
@@ -27,6 +27,15 @@ func Init(dbPath string) error {
 		logger.Panicf("failed to open database: %v", err)
 		return err
 	}
+
+	sqlDB, err := Db.DB()
+	if err != nil {
+		logger.Panicf("failed to get sql db: %v", err)
+		return err
+	}
+
+	sqlDB.SetMaxIdleConns(0)
+	sqlDB.SetMaxOpenConns(1)
 
 	if model.Level(conf.Cfg.Service.LogLevel) == model.DEBUG {
 		Db = Db.Debug()

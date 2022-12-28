@@ -1,9 +1,10 @@
 module github.com/sptuan/stargazer
 
-go 1.17
+go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/glebarez/sqlite v1.6.0
 	github.com/go-playground/validator/v10 v10.11.1
 	github.com/tatsushid/go-fastping v0.0.0-20160109021039-d7bb493dee3e
 	go.uber.org/zap v1.21.0
@@ -19,7 +20,6 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
-	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -39,6 +39,14 @@ require (
 )
 
 require (
+	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/glebarez/go-sqlite v1.20.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
+	github.com/remyoudompheng/bigfft v0.0.0-20220927061507-ef77025ab5aa // indirect
 	golang.org/x/sys v0.3.0 // indirect
+	modernc.org/libc v1.22.2 // indirect
+	modernc.org/mathutil v1.5.0 // indirect
+	modernc.org/memory v1.5.0 // indirect
+	modernc.org/sqlite v1.20.0 // indirect
 )

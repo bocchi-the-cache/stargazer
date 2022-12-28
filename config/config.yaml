@@ -7,6 +7,8 @@ service:
     port: 8080
   log_level: # debug, info, error
     "info"
+  log_clean_before: #hours
+    168
 
 data:
   database:

@@ -25,7 +25,7 @@ type Detector interface {
 
 func newMessage() entity.DataLog {
 	return entity.DataLog{
-		Time:  time.Now().Unix(),
-		Level: string(model.INFO),
+		CreatedAt: time.Now().Unix(),
+		Level:     string(model.INFO),
 	}
 }

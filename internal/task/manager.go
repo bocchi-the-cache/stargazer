@@ -1,6 +1,7 @@
 package task
 
 import (
+	"github.com/sptuan/stargazer/internal/conf"
 	"github.com/sptuan/stargazer/internal/dao"
 	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/pkg/logger"
@@ -27,19 +28,26 @@ func (m *Manager) Start() {
 			time.Sleep(5 * time.Second)
 			ts, err := dao.GetTasks()
 			if err != nil {
-				logger.Panicf("get tasks from database failed: %v", err)
+				logger.Errorf("get tasks from database failed: %v", err)
+				continue
 			}
 			m.Refresh(ts)
 		}
 	}()
-	// Clear data logs every 6 hours
+	// Clear data logs
 	go func() {
 		for {
-			time.Sleep(6 * time.Hour)
-			err := dao.DeleteDataLogBeforeTime(int(time.Now().AddDate(0, 0, -7).Unix()))
+			cleanBefore := conf.Cfg.Service.LogCleanBefore
+			if cleanBefore == 0 {
+				cleanBefore = 24 * 7
+			}
+			t := time.Now().Add(time.Hour * time.Duration(cleanBefore*-1))
+			err := dao.DeleteDataLogBeforeTime(int(t.Unix()))
 			if err != nil {
 				logger.Errorf("clear data logs failed: %v", err)
 			}
+			logger.Infof("clear log success! before: %v", t)
+			time.Sleep(15 * time.Minute)
 		}
 	}()
 }
