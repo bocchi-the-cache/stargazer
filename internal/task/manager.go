@@ -28,7 +28,8 @@ func (m *Manager) Start() {
 			time.Sleep(5 * time.Second)
 			ts, err := dao.GetTasks()
 			if err != nil {
-				logger.Panicf("get tasks from database failed: %v", err)
+				logger.Errorf("get tasks from database failed: %v", err)
+				continue
 			}
 			m.Refresh(ts)
 		}

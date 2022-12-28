@@ -28,6 +28,15 @@ func Init(dbPath string) error {
 		return err
 	}
 
+	sqlDB, err := Db.DB()
+	if err != nil {
+		logger.Panicf("failed to get sql db: %v", err)
+		return err
+	}
+
+	sqlDB.SetMaxIdleConns(0)
+	sqlDB.SetMaxOpenConns(1)
+
 	if model.Level(conf.Cfg.Service.LogLevel) == model.DEBUG {
 		Db = Db.Debug()
 	}
