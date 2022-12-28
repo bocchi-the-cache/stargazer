@@ -1,11 +1,11 @@
 package db
 
 import (
+	"github.com/glebarez/sqlite"
 	"github.com/sptuan/stargazer/internal/conf"
 	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/internal/model"
 	"github.com/sptuan/stargazer/pkg/logger"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"io/fs"
 	"os"

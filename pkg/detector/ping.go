@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"github.com/sptuan/stargazer/internal/entity"
 	"github.com/sptuan/stargazer/internal/model"
+	"github.com/sptuan/stargazer/pkg/logger"
 	"github.com/tatsushid/go-fastping"
 	"net"
 	"os"
-	"strings"
+	"os/signal"
 	"time"
 )
 
 // PingDetector ping target with ICMP ping
 //
 // Note: ICMP ping requires root privilege!
+//
+// go-fasting has some bugs on different platforms. Maybe you should use shell command to ping.
 type PingDetector struct {
 	BaseDetector
 }
@@ -37,28 +40,30 @@ func NewPingDetector(task *entity.Task) (*PingDetector, error) {
 	}, nil
 }
 
-// Detect
-//
-// WARNING: Ping ICMP requires root privilege!
+// Detect Ping with ICMP, requiring root privilege!
 func (d *PingDetector) Detect() (entity.DataLog, error) {
+	// panic recover and print stack
+	defer func() {
+		if err := recover(); err != nil {
+			//fmt.Println("ping detector panic recovered: ", err)
+			logger.Error("ping detector panic recovered: ", err)
+		}
+	}()
+
 	d.UpdateTime = time.Now()
 	msg := newMessage()
 	pinger := fastping.NewPinger()
-	//_, err := pinger.Network("udp")
-	//if err != nil {
-	//	msg.Level = string(model.ERROR)
-	//	msg.Message = fmt.Sprintf("make request error: %v", err)
-	//	return msg, err
-	//}
 
 	netProto := "ip4:icmp"
-	if strings.Index(d.Target, ":") != -1 {
-		netProto = "ip6:ipv6-icmp"
-	}
+	//if strings.Index(d.Target, ":") != -1 {
+	//	netProto = "ip6:ipv6-icmp"
+	//}
 	ra, err := net.ResolveIPAddr(netProto, d.Target)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		logger.Error("ping detector resolve ip addr error: ", err)
+		msg.Level = string(model.ERROR)
+		msg.Message = err.Error()
+		return msg, err
 	}
 
 	type response struct {
@@ -76,14 +81,21 @@ func (d *PingDetector) Detect() (entity.DataLog, error) {
 	pinger.OnIdle = func() {
 		onIdle <- true
 	}
-	pinger.MaxRTT = time.Second
+	pinger.MaxRTT = time.Second * 3
 	pinger.RunLoop()
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+
 	defer func() {
 		pinger.Stop()
 	}()
 loop:
 	for {
 		select {
+		case <-c:
+			logger.Debugf("ping detector %s interrupted", d.Name)
+			break loop
 		case res := <-onRecv:
 			if _, ok := results[res.addr.String()]; ok {
 				results[res.addr.String()] = res
