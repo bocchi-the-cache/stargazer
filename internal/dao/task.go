@@ -1,8 +1,8 @@
 package dao
 
 import (
-	"github.com/sptuan/stargazer/internal/db"
-	"github.com/sptuan/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/internal/db"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
 )
 
 func AddTask(task *entity.Task) error {

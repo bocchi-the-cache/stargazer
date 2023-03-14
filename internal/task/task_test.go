@@ -1,8 +1,8 @@
 package task
 
 import (
-	"github.com/sptuan/stargazer/internal/db"
-	"github.com/sptuan/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/internal/db"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
 	"testing"
 	"time"
 )

@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/sptuan/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"testing"

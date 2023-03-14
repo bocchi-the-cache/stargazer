@@ -2,9 +2,9 @@ package service
 
 import (
 	"fmt"
+	"github.com/bocchi-the-cache/stargazer/internal/conf"
+	"github.com/bocchi-the-cache/stargazer/internal/model"
 	"github.com/gin-gonic/gin"
-	"github.com/sptuan/stargazer/internal/conf"
-	"github.com/sptuan/stargazer/internal/model"
 )
 
 var defaultRouter *gin.Engine
