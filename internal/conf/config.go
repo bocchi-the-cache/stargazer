@@ -1,8 +1,8 @@
 package conf
 
 import (
-	"github.com/sptuan/stargazer/config"
-	"github.com/sptuan/stargazer/pkg/logger"
+	"github.com/bocchi-the-cache/stargazer/config"
+	"github.com/bocchi-the-cache/stargazer/pkg/logger"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"

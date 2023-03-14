@@ -2,11 +2,11 @@ package main
 
 import (
 	"flag"
-	"github.com/sptuan/stargazer/internal/conf"
-	"github.com/sptuan/stargazer/internal/db"
-	"github.com/sptuan/stargazer/internal/service"
-	"github.com/sptuan/stargazer/internal/task"
-	"github.com/sptuan/stargazer/pkg/logger"
+	"github.com/bocchi-the-cache/stargazer/internal/conf"
+	"github.com/bocchi-the-cache/stargazer/internal/db"
+	"github.com/bocchi-the-cache/stargazer/internal/service"
+	"github.com/bocchi-the-cache/stargazer/internal/task"
+	"github.com/bocchi-the-cache/stargazer/pkg/logger"
 )
 
 var (

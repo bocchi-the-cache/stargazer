@@ -1,10 +1,10 @@
 package task
 
 import (
-	"github.com/sptuan/stargazer/internal/conf"
-	"github.com/sptuan/stargazer/internal/dao"
-	"github.com/sptuan/stargazer/internal/entity"
-	"github.com/sptuan/stargazer/pkg/logger"
+	"github.com/bocchi-the-cache/stargazer/internal/conf"
+	"github.com/bocchi-the-cache/stargazer/internal/dao"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/pkg/logger"
 	"reflect"
 	"time"
 )

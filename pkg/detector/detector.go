@@ -1,8 +1,8 @@
 package detector
 
 import (
-	"github.com/sptuan/stargazer/internal/entity"
-	"github.com/sptuan/stargazer/internal/model"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/internal/model"
 	"time"
 )
 

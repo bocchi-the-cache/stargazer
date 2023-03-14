@@ -1,11 +1,11 @@
 package db
 
 import (
+	"github.com/bocchi-the-cache/stargazer/internal/conf"
+	"github.com/bocchi-the-cache/stargazer/internal/entity"
+	"github.com/bocchi-the-cache/stargazer/internal/model"
+	"github.com/bocchi-the-cache/stargazer/pkg/logger"
 	"github.com/glebarez/sqlite"
-	"github.com/sptuan/stargazer/internal/conf"
-	"github.com/sptuan/stargazer/internal/entity"
-	"github.com/sptuan/stargazer/internal/model"
-	"github.com/sptuan/stargazer/pkg/logger"
 	"gorm.io/gorm"
 	"io/fs"
 	"os"
